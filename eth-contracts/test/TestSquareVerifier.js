@@ -24,13 +24,8 @@ contract("Verifier", (accounts, web3) =>{
             // });
             let result = await this.contract.verifyTx.call(
                 TEST.correctProof.A,
-                TEST.correctProof.A_p,
                 TEST.correctProof.B,
-                TEST.correctProof.B_p,
                 TEST.correctProof.C,
-                TEST.correctProof.C_p,
-                TEST.correctProof.H,
-                TEST.correctProof.K,
                 TEST.correctInput,
                 {from: TEST.contractOwner}
             );
@@ -41,13 +36,8 @@ contract("Verifier", (accounts, web3) =>{
         it("verification with incorrect proof", async function(){
             let result = await this.contract.verifyTx.call(
                 TEST.badProof.A,
-                TEST.badProof.A_p,
                 TEST.badProof.B,
-                TEST.badProof.B_p,
                 TEST.badProof.C,
-                TEST.badProof.C_p,
-                TEST.badProof.H,
-                TEST.badProof.K,
                 TEST.badInput,
                 {from: TEST.contractOwner}
             );
