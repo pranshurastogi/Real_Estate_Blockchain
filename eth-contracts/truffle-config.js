@@ -18,11 +18,10 @@
  *
  */
 
-// const HDWalletProvider = require('truffle-hdwallet-provider');
-// const infuraKey = "fj4jll3k.....";
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const HDWalletProvider = require('truffle-hdwallet-provider');
+const infuraKey = "3e5d33f1b1f74340973a654e01d28b76";
+const fs = require('fs');
+const mnemonic = "employ direct tenant initial naive have victory canoe forest attend symptom artwork";
 
 module.exports = {
   /**
@@ -41,12 +40,20 @@ module.exports = {
     // You should run a client (like ganache-cli, geth or parity) in a separate terminal
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
-    //
-     development: {
-      host: "127.0.0.1",     // Localhost (default: none)
-      port: 8545,            // Standard Ethereum port (default: none)
-      network_id: "*",       // Any network (default: none)
-     },
+
+      development: {
+          host: "127.0.0.1",     // Localhost (default: none)
+          port: 8545,            // Standard Ethereum port (default: none)
+          network_id: "*",
+      },
+      rinkeby: {
+          provider: function() {
+              return new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${infuraKey}`);
+          },
+          network_id: 4,
+          gas: 7000000,
+          gasPrice: 10000000000
+      }
 
     // Another network with more advanced options...
     // advanced: {
@@ -85,7 +92,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      // version: "0.5.1",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.5.5",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
