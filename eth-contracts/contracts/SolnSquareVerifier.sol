@@ -24,25 +24,20 @@ contract SolnSquareVerifier is ERC721Metadata, Verifier {
     function addSolution
     (
         uint[2] memory a,
-        uint[2] memory a_p,
         uint[2][2] memory b,
-        uint[2] memory b_p,
         uint[2] memory c,
-        uint[2] memory c_p,
-        uint[2] memory h,
-        uint[2] memory k,
         uint[2] memory input
     )
     public
     {
-        bytes32 proofHash = createProofHash(a, a_p, b, b_p, c, c_p, h, k, input);
+        bytes32 proofHash = createProofHash(a,b,c, input);
         require(uniqueSolutions[proofHash].submitterAddress == address(0), "Solution exists already");
 
-        bool isValid = verifyTx(a, a_p, b, b_p, c, c_p, h, k, input);
+        bool isValid = verifyTx(a,b,c, input);
         require(isValid == true, "Solution is not valid");
 
         Solution memory solution =  Solution({
-        hash: createProofHash(a, a_p, b, b_p, c, c_p, h, k, input), submitterAddress: msg.sender, hasToken: false});
+        hash: createProofHash(a,b,c, input), submitterAddress: msg.sender, hasToken: false});
         solutions.push(solution);
         addressToSolution[msg.sender] = solution;
         uniqueSolutions[solution.hash] = solution;
@@ -62,19 +57,19 @@ contract SolnSquareVerifier is ERC721Metadata, Verifier {
     }
 
 
-    function createProofHash(uint[2] memory a, uint[2] memory a_p, uint[2][2] memory b, uint[2] memory b_p, uint[2] memory c, uint[2] memory c_p, uint[2] memory h, uint[2] memory k, uint[2] memory input)
+    function createProofHash(uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[2] memory input)
     internal
     pure
     returns (bytes32)
     {
-        bytes32 keyBytes = keccak256(abi.encodePacked(a, a_p, b, b_p, c, c_p, h, k, input));
+        bytes32 keyBytes = keccak256(abi.encodePacked(a,b,c, input));
         return keyBytes;
     }
 }
 
 
 //contract Verifier {
-//    function verifyTx(uint[2] memory a, uint[2] memory a_p, uint[2][2] memory b, uint[2] memory b_p, uint[2] memory c, uint[2] memory c_p, uint[2] memory h, uint[2] memory k, uint[2] memory input) public returns (bool r);
+//    function verifyTx(uint[2] memory a, uint[2][2] memory b, uint[2] memory c, uint[2] memory input) public returns (bool r);
 //}
 
 // TODO [+] define a contract call to the zokrates generated solidity contract <Verifier> or <renamedVerifier>

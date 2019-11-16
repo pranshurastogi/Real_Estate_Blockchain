@@ -23,13 +23,8 @@ contract("SolnSquareVerifier", (accounts, web3) =>{
 
             await this.contract.addSolution(
                 TEST.correctProof.A,
-                TEST.correctProof.A_p,
                 TEST.correctProof.B,
-                TEST.correctProof.B_p,
                 TEST.correctProof.C,
-                TEST.correctProof.C_p,
-                TEST.correctProof.H,
-                TEST.correctProof.K,
                 TEST.correctInput,
                 {from: TEST.contractOwner}
             );
@@ -37,26 +32,16 @@ contract("SolnSquareVerifier", (accounts, web3) =>{
         it("can not add the same solution again", async function(){
             await this.contract.addSolution(
                 TEST.correctProof.A,
-                TEST.correctProof.A_p,
                 TEST.correctProof.B,
-                TEST.correctProof.B_p,
                 TEST.correctProof.C,
-                TEST.correctProof.C_p,
-                TEST.correctProof.H,
-                TEST.correctProof.K,
                 TEST.correctInput,
                 {from: TEST.contractOwner}
             );
             try {
                 await this.contract.addSolution(
                     TEST.correctProof.A,
-                    TEST.correctProof.A_p,
                     TEST.correctProof.B,
-                    TEST.correctProof.B_p,
                     TEST.correctProof.C,
-                    TEST.correctProof.C_p,
-                    TEST.correctProof.H,
-                    TEST.correctProof.K,
                     TEST.correctInput,
                     {from: TEST.contractOwner}
                 );
@@ -69,13 +54,8 @@ contract("SolnSquareVerifier", (accounts, web3) =>{
         it("can mint a token when there is solution available for to address", async function () {
             await this.contract.addSolution(
                 TEST.correctProof.A,
-                TEST.correctProof.A_p,
                 TEST.correctProof.B,
-                TEST.correctProof.B_p,
                 TEST.correctProof.C,
-                TEST.correctProof.C_p,
-                TEST.correctProof.H,
-                TEST.correctProof.K,
                 TEST.correctInput,
                 {from: TEST.firstTokenRecipient}
             );
@@ -102,13 +82,8 @@ contract("SolnSquareVerifier", (accounts, web3) =>{
             let tokensBefore = await this.contract.totalSupply.call();
             await this.contract.addSolution(
                 TEST.correctProof.A,
-                TEST.correctProof.A_p,
                 TEST.correctProof.B,
-                TEST.correctProof.B_p,
                 TEST.correctProof.C,
-                TEST.correctProof.C_p,
-                TEST.correctProof.H,
-                TEST.correctProof.K,
                 TEST.correctInput,
                 {from: TEST.firstTokenRecipient}
             );
